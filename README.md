@@ -1,6 +1,24 @@
 # zen_gpt_bot
 Web page application for Zen OpenAI ChatGPT bot. Ask it all of your deep questions.
 
+## Instructions
+
+Make sure you have python installed.
+
+Install all necessary packages.
+
+```
+pip install flask
+pip install openai
+```
+
+Replace your API in the app.py key with your own.
+
+Clone the repo to your local machine, and run from the main folder with the following:
+
+```
+python app.py
+```
 
 ## Version 0.1
 
