@@ -1,0 +1,90 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Zen Chatbot</title>
+    <script src="https://code.jquery.com/jquery-3.5.1.min.js"></script>
+    <link rel="stylesheet" href="{{ url_for('static', filename='style.css') }}">
+</head>
+<body>
+    <h1>Welcome to the Zen GPT Bot!</h1>
+<!--     <div>
+        <label for="user_question">You:</label>
+        <input type="text" id="user_question">
+        <button onclick="askChatGPT()">Ask</button>
+    </div>
+    <div>
+        <label for="chatgpt_response">ChatGPT:</label>
+        <p id="chatgpt_response"></p>
+        <p id="loading_message" style="display: none;">Philosophy Bot is thinking...</p>
+    </div> -->
+    <div id="chat-container">
+        <div class="bot-message">
+            <!-- <img src="../assets/images/zen-monk-avatar.png" alt="Bot Avatar" class="bot-avatar"> -->
+            <img src="{{ url_for('static', filename='images/zen-monk-avatar.png') }}" class="bot-avatar">
+            <!-- <img src="https://thediplomat.com/wp-content/uploads/2022/01/sizes/medium/thediplomat_2022-01-24-023507.jpg" class="bot-avatar"> -->
+            <p class="message-text">Hello, I'm here to help with your philosophical inquiries.</p>
+        </div>
+        <div id="chat-window">
+            <!-- Messages will appear here -->
+        </div>
+        <div id="chat-input">
+            <input type="text" id="user_question" placeholder="Type your message...">
+            <button onclick="askChatGPT()">Send</button>
+        </div>
+        <button id="restart-button">Restart Chat</button>
+        <button id="save-button">Save Chat</button>
+    </div>
+    <p id="loading_message" style="display: none;">Philosophy Bot is thinking...</p>
+
+    <script>
+
+        // function appendMessage(who, text) {
+        //     var messageDiv = $('<div>').text(text).addClass(who + '-message');
+        //     $('#chat-window').append(messageDiv);
+        // }
+
+        function appendMessage(who, text) {
+            var messageDiv = $('<div>').addClass(who + '-message');
+            if (who === 'bot') {
+                var botAvatar = $('<img>').attr('src', "{{ url_for('static', filename='images/zen-monk-avatar.png') }}").addClass('bot-avatar');
+                messageDiv.append(botAvatar);
+            }
+            var messageText = $('<p>').text(text).addClass('message-text');
+            messageDiv.append(messageText);
+            $('#chat-window').append(messageDiv);
+        }
+
+        function askChatGPT() {
+            var user_question = $('#user_question').val();
+            appendMessage('user', user_question);
+            $('#loading_message').show();
+            $('#user_question').val(''); // Clear input field
+            $.post('/ask', { user_question: user_question }, function(data) {
+                $('#loading_message').hide();
+                var chatgpt_response = data.chatgpt_response;
+                appendMessage('bot', chatgpt_response);
+                $('#chat-window').scrollTop($('#chat-window')[0].scrollHeight); // Scroll to the bottom
+            });
+        }
+
+        document.getElementById('restart-button').addEventListener('click', function() {
+            document.getElementById('chat-window').innerHTML = '';
+            // You may also want to reset any internal state of the conversation
+        });
+
+        document.getElementById('save-button').addEventListener('click', function() {
+            const chatContent = document.getElementById('chat-window').innerText;
+            const blob = new Blob([chatContent], { type: 'text/plain;charset=utf-8' });
+            const href = URL.createObjectURL(blob);
+            const a = document.createElement('a');
+            a.href = href;
+            a.download = 'chat-conversation.txt';
+            a.click();
+            URL.revokeObjectURL(href);
+        });
+
+    </script>
+</body>
+</html>

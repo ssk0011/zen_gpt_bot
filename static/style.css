@@ -1,0 +1,121 @@
+body {
+    font-family: Helvetica, sans-serif;
+    margin: 40px;
+    background-color: #f9f9f9;
+}
+
+h1 {
+    color: #333;
+    text-align: center;
+}
+
+label {
+    font-weight: bold;
+}
+
+button {
+    padding: 10px 20px;
+    border: none;
+    border-radius: 5px;
+    background: #007bff;
+    color: #fff;
+    cursor: pointer;
+    transition: background 0.3s;
+}
+
+button:hover {
+    background: #0056b3;
+}
+
+
+#chat-container {
+    max-width: 600px;
+    margin: 20px auto;
+    background: #fff;
+    border-radius: 5px;
+    box-shadow: 0px 2px 4px rgba(0, 0, 0, 0.1);
+    overflow: hidden; /* Hide the speech bubble tails that extend outside the container */
+}
+
+#chat-window {
+    height: 400px;
+    overflow-y: scroll;
+    padding: 20px;
+    border-bottom: 1px solid #ccc;
+}
+
+#chat-input {
+    border-top: 1px solid #ccc;
+    display: flex;
+    justify-content: space-between;
+    padding: 10px;
+}
+
+#user_question {
+    width: 80%;
+    padding: 10px;
+}
+
+.user-message, .bot-message {
+    border-radius: 15px;
+    box-shadow: 0px 2px 4px rgba(0, 0, 0, 0.1);
+    margin: 10px 0; /* Add vertical space between messages */
+    padding: 10px;
+    border-radius: 10px;
+    word-wrap: break-word;
+    overflow-wrap: break-word;
+    max-width: 90%;
+    position: relative;
+    text-align: right;
+}
+
+.user-message:after {
+    content: '';
+    position: absolute;
+    right: -10px;
+    top: 50%;
+    width: 0;
+    border: 10px solid transparent;
+    border-left-color: #e6f7ff;
+    margin-top: -10px;
+}
+
+.bot-message:after {
+    content: '';
+    position: absolute;
+    left: -10px;
+    top: 50%;
+    width: 0;
+    border: 10px solid transparent;
+    border-right-color: #f0f0f0;
+    margin-top: -10px;
+}
+
+.user-message {
+    background: #e6f7ff;
+    text-align: right;
+}
+
+/*.bot-message {
+    background: #f0f0f0;
+    position: relative;
+}*/
+
+.bot-message {
+    background: #f0f0f0;
+    position: relative;
+    display: flex; /* Add this line */
+    align-items: center; /* Align items vertically in the center */
+}
+
+.message-text {
+    overflow: hidden; /* Clear float */
+}
+
+.bot-avatar {
+    width: 50px; /* Set a width for the avatar image */
+    margin-right: 10px; /* Add some space between the image and the text */
+    height: 50px; /* Adjust as needed */
+    padding: 5px;
+}
+
